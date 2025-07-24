@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-TRUE: Giải Pháp Công Nghệ Đột Phá</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #EAEAEA;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .neon-text { color: #66FCF1; }
+        .neon-border { border-color: #66FCF1; }
+        .neon-shadow { box-shadow: 0 0 5px #66FCF1, 0 0 10px #66FCF1, 0 0 15px #66FCF1; }
+        .neon-button {
+            transition: all 0.3s ease;
+            border: 2px solid #66FCF1;
+            color: #66FCF1;
+            text-shadow: 0 0 5px #66FCF1;
+        }
+        .neon-button:hover {
+            background-color: #66FCF1;
+            color: #0d1117;
+            box-shadow: 0 0 15px #66FCF1, 0 0 25px #66FCF1;
+            text-shadow: none;
+        }
+        .service-card {
+            background-color: rgba(22, 27, 34, 0.5);
+            border: 1px solid #30363d;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #66FCF1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .nav-link.active {
+            color: #66FCF1;
+            text-shadow: 0 0 5px #66FCF1;
+        }
+        .scroll-hidden::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-hidden {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="scroll-hidden">
+    <!-- Chosen Palette: Futuristic Neon (Dark base, Cyan/Teal accent) -->
+    <!-- Application Structure Plan: A single-page, top-to-bottom storytelling flow. It starts with a strong brand impression (Hero), explains the company's offerings (Services), builds trust by showing who they are (About) and what they've done (Projects), and finally provides a clear call to action (Contact). This linear structure is intuitive and guides the user through a curated narrative, maximizing comprehension and engagement. -->
+    <!-- Visualization & Content Choices: Hero Section uses a JS Canvas animation for a dynamic, futuristic background without heavy video files. Services section uses Unicode characters styled as icons to avoid SVG usage, maintaining the tech aesthetic. Other sections use responsive Tailwind layouts (grids, flexbox) for clean presentation of text and image content. The entire design adheres to the specified color and typography guidelines. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <header id="main-header" class="bg-opacity-80 backdrop-blur-md bg-[#0d1117] fixed w-full top-0 z-50 transition-shadow duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-orbitron font-bold tracking-widest">
+                E<span class="neon-text">/</span>TRUE
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#services" class="nav-link text-lg hover:neon-text transition-colors">Dịch vụ</a>
+                <a href="#about" class="nav-link text-lg hover:neon-text transition-colors">Về chúng tôi</a>
+                <a href="#projects" class="nav-link text-lg hover:neon-text transition-colors">Dự án</a>
+                <a href="#contact" class="nav-link text-lg hover:neon-text transition-colors">Liên hệ</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-3xl">
+                &#9776;
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#0d1117] bg-opacity-95">
+            <a href="#services" class="block text-center py-4 text-lg hover:neon-text transition-colors">Dịch vụ</a>
+            <a href="#about" class="block text-center py-4 text-lg hover:neon-text transition-colors">Về chúng tôi</a>
+            <a href="#projects" class="block text-center py-4 text-lg hover:neon-text transition-colors">Dự án</a>
+            <a href="#contact" class="block text-center py-4 text-lg hover:neon-text transition-colors">Liên hệ</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+            <canvas id="hero-canvas"></canvas>
+            <div class="relative z-10 p-6">
+                <div class="inline-block mb-8 animate-pulse">
+                    <h2 class="text-6xl md:text-8xl font-orbitron font-bold tracking-widest">
+                        E<span class="neon-text">/</span>TRUE
+                    </h2>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-orbitron font-bold max-w-4xl mx-auto mb-4">
+                    Kiến Tạo Tương Lai Công Nghệ Số
+                </h1>
+                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-300">
+                    Chúng tôi biến những ý tưởng phức tạp thành các giải pháp công nghệ hiệu quả, an toàn và sẵn sàng cho tương lai.
+                </p>
+                <a href="#services" class="neon-button font-bold py-3 px-8 rounded-lg text-lg uppercase tracking-wider">
+                    Khám Phá Giải Pháp
+                </a>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-4">Giải Pháp Của Chúng Tôi</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">Cung cấp các dịch vụ công nghệ toàn diện để thúc đẩy sự phát triển của doanh nghiệp bạn.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section">
+                        <div class="text-6xl neon-text mb-4">🛡️</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">An ninh mạng</h3>
+                        <p class="text-gray-400">Bảo vệ hệ thống của bạn khỏi các mối đe dọa với các giải pháp bảo mật tiên tiến và kiểm tra thâm nhập toàn diện.</p>
+                    </div>
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section" style="transition-delay: 100ms;">
+                        <div class="text-6xl neon-text mb-4">☁️</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">Điện toán đám mây</h3>
+                        <p class="text-gray-400">Tối ưu hóa hạ tầng, tăng cường khả năng mở rộng và hiệu suất với các dịch vụ đám mây hàng đầu.</p>
+                    </div>
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section" style="transition-delay: 200ms;">
+                        <div class="text-6xl neon-text mb-4">🧠</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">Trí tuệ nhân tạo</h3>
+                        <p class="text-gray-400">Tích hợp AI để tự động hóa quy trình, phân tích dữ liệu và tạo ra các sản phẩm thông minh vượt trội.</p>
+                    </div>
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section" style="transition-delay: 300ms;">
+                        <div class="text-6xl neon-text mb-4">📈</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">Phân tích dữ liệu</h3>
+                        <p class="text-gray-400">Biến dữ liệu thô thành thông tin chi tiết có giá trị, hỗ trợ ra quyết định chiến lược và tối ưu hóa kinh doanh.</p>
+                    </div>
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section" style="transition-delay: 400ms;">
+                        <div class="text-6xl neon-text mb-4">📱</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">Phát triển ứng dụng</h3>
+                        <p class="text-gray-400">Xây dựng các ứng dụng di động và web mượt mà, thân thiện với người dùng và có khả năng mở rộng cao.</p>
+                    </div>
+                    <div class="service-card p-8 rounded-lg text-center fade-in-section" style="transition-delay: 500ms;">
+                        <div class="text-6xl neon-text mb-4">🔗</div>
+                        <h3 class="text-2xl font-orbitron font-bold mb-3">Công nghệ Blockchain</h3>
+                        <p class="text-gray-400">Triển khai các giải pháp blockchain an toàn, minh bạch và phi tập trung cho các ứng dụng thế hệ mới.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 md:py-32 bg-[#10151d]">
+            <div class="container mx-auto px-6">
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in-section">
+                        <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-6">Sứ Mệnh Của E-TRUE</h2>
+                        <p class="text-lg text-gray-300 mb-4">
+                            Tại E-TRUE, chúng tôi tin rằng công nghệ là chìa khóa để mở ra tiềm năng vô hạn. Sứ mệnh của chúng tôi là cung cấp các giải pháp công nghệ không chỉ hiệu quả mà còn đáng tin cậy và minh bạch. Chúng tôi là đối tác đồng hành, giúp khách hàng điều hướng thế giới số phức tạp và đạt được những mục tiêu lớn lao.
+                        </p>
+                        <p class="text-lg text-gray-300">
+                            Với đội ngũ chuyên gia đầy nhiệt huyết và kinh nghiệm, chúng tôi cam kết mang đến sự xuất sắc trong từng dự án, xây dựng một tương lai số an toàn và bền vững hơn.
+                        </p>
+                    </div>
+                    <div class="fade-in-section" style="transition-delay: 200ms;">
+                        <div class="rounded-lg overflow-hidden shadow-2xl">
+                             <img src="https://placehold.co/600x400/0d1117/66FCF1?text=Our+Team" alt="Đội ngũ E-TRUE" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-4">Dự Án Đã Triển Khai</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">Thành công của khách hàng là minh chứng rõ ràng nhất cho năng lực của chúng tôi.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card rounded-lg overflow-hidden fade-in-section">
+                        <img src="https://placehold.co/600x400/161b22/EAEAEA?text=Project+Alpha" alt="Dự án Alpha" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-orbitron font-bold mb-2">Hệ thống AI cho FinCorp</h3>
+                            <p class="text-gray-400 text-sm">Tối ưu hóa quy trình thẩm định tín dụng, giảm 40% thời gian xử lý.</p>
+                        </div>
+                    </div>
+                    <div class="service-card rounded-lg overflow-hidden fade-in-section" style="transition-delay: 100ms;">
+                        <img src="https://placehold.co/600x400/161b22/EAEAEA?text=Project+Beta" alt="Dự án Beta" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-orbitron font-bold mb-2">Nền tảng Cloud cho TechMed</h3>
+                            <p class="text-gray-400 text-sm">Xây dựng hạ tầng đám mây linh hoạt, đáp ứng tiêu chuẩn bảo mật y tế HIPAA.</p>
+                        </div>
+                    </div>
+                    <div class="service-card rounded-lg overflow-hidden fade-in-section" style="transition-delay: 200ms;">
+                        <img src="https://placehold.co/600x400/161b22/EAEAEA?text=Project+Gamma" alt="Dự án Gamma" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-orbitron font-bold mb-2">Ứng dụng di động cho LogiFast</h3>
+                            <p class="text-gray-400 text-sm">Phát triển ứng dụng quản lý vận đơn, tăng 30% hiệu quả giao nhận.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 md:py-32 bg-[#10151d]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-4xl md:text-5xl font-orbitron font-bold mb-4">Kết Nối Với E-TRUE</h2>
+                    <p class="text-lg text-gray-400 max-w-2xl mx-auto">Sẵn sàng để bắt đầu dự án tiếp theo của bạn? Hãy cho chúng tôi biết ý tưởng của bạn.</p>
+                </div>
+                <div class="max-w-4xl mx-auto fade-in-section">
+                    <form action="#" method="POST" class="grid grid-cols-1 gap-6">
+                        <input type="text" placeholder="Tên của bạn" class="w-full p-4 rounded-lg bg-[#161b22] border border-[#30363d] focus:outline-none focus:border-neon-text transition-colors">
+                        <input type="email" placeholder="Email" class="w-full p-4 rounded-lg bg-[#161b22] border border-[#30363d] focus:outline-none focus:border-neon-text transition-colors">
+                        <textarea placeholder="Nội dung tin nhắn..." rows="6" class="w-full p-4 rounded-lg bg-[#161b22] border border-[#30363d] focus:outline-none focus:border-neon-text transition-colors"></textarea>
+                        <div class="text-center">
+                            <button type="submit" class="neon-button font-bold py-3 px-12 rounded-lg text-lg uppercase tracking-wider">
+                                Gửi đi
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 bg-[#0d1117] border-t border-[#30363d]">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2025 E-TRUE. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Kiến tạo tương lai số.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when a link is clicked
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // Header shadow on scroll
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow-lg', 'shadow-gray-900/50');
+                } else {
+                    header.classList.remove('shadow-lg', 'shadow-gray-900/50');
+                }
+            });
+
+            // Active nav link on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a.nav-link');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Fade in sections on scroll
+            const fadeInSections = document.querySelectorAll('.fade-in-section');
+            const fadeInObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeInSections.forEach(section => {
+                fadeInObserver.observe(section);
+            });
+
+            // Hero Canvas Animation
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 1 - 0.5;
+                    this.speedY = Math.random() * 1 - 0.5;
+                    this.color = '#66FCF1';
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.size > 0.2) this.size -= 0.01;
+                }
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                for (let i = 0; i < 100; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function handleParticles() {
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(102, 252, 241, ${1 - distance / 100})`;
+                            ctx.lineWidth = 0.2;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    if (particles[i].size <= 0.2) {
+                        particles.splice(i, 1);
+                        i--;
+                        particles.push(new Particle());
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                handleParticles();
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            window.addEventListener('resize', resizeCanvas);
+        });
+    </script>
+</body>
+</html>
